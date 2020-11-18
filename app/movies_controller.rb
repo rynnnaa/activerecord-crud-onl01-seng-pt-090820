@@ -6,9 +6,9 @@
 # end                              # end
 
 def can_be_instantiated_and_then_saved
-  movie = __
+  movie = Movie.new
   movie.title = "This is a title."
-  __
+  movie.save
 end
 
 def can_be_created_with_a_hash_of_attributes
@@ -20,33 +20,39 @@ def can_be_created_with_a_hash_of_attributes
       lead: "Paul Newman",
       in_theaters: false
   }
-  movie = __
+  movie = Movie.create(attributes)
 end
 
-def can_be_created_in_a_block(args = __)
+def can_be_created_in_a_block(args = {title: "Home Alone", release_date: 1990})
   # If no arguments are passed, use default values:
   # title == "Home Alone"
   # release_date == 1990
   
   Movie.create do |m|
-    __
+    if args == nil
+      m.title = "Home Alone"
+      m.release_date = 1990
+    else
+      m.title = args[:title]
+      m.release_date = args[:release_date]
+    end
   end
 end
 
 def can_get_the_first_item_in_the_database
-  __
+  movie = Movie.first
 end
 
 def can_get_the_last_item_in_the_database
-  __
+  movie = Movie.last
 end
 
 def can_get_size_of_the_database
-  __
+  movie = Movie.count
 end
 
 def can_find_the_first_item_from_the_database_using_id
-  __
+  movie = Movie.find(1)
 end
 
 def can_find_by_multiple_attributes
@@ -54,13 +60,13 @@ def can_find_by_multiple_attributes
   # title == "Title"
   # release_date == 2000
   # director == "Me"
-  __
+  movie = Movie.find_by title: "Title"
 end
 
 def can_find_using_where_clause_and_be_sorted
   # For this test return all movies released after 2002 and ordered by 
   # release date descending
-  __
+  movie = Movie.where:release_date: 2002 desc
 end
 
 def can_be_found_updated_and_saved
